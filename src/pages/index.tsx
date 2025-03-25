@@ -1,10 +1,7 @@
-function Home() {
-  return (
-    <div>
-      <h1>Home Page</h1>
-      <button>click</button>
-    </div>
-  );
-}
+import Menu from '@/components/menu/Menu';
+
+const Home = () => {
+  return <Menu />;
+};
 
 export default Home;
