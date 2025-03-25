@@ -1,6 +1,9 @@
+import { useRef } from 'react';
 import { Button, Flex, Space, Table, TableProps } from 'antd';
 import Column from 'antd/es/table/Column';
 import classNames from 'classnames/bind';
+import { BasisModalHandle } from '@/components/modal/BasisModal';
+import PageRegistrationModal from '@/components/modal/pageRegistration/PageRegistrationModal';
 import styles from './index.module.scss';
 
 interface PageDataType {
@@ -60,10 +63,16 @@ const rowSelection: TableProps<PageDataType>['rowSelection'] = {
 const PagePage = () => {
   const cx = classNames.bind(styles);
 
+  const pageRegistrationModalRef = useRef<BasisModalHandle>(null);
+
+  const handlePageRegistration = () => {
+    pageRegistrationModalRef.current?.open();
+  };
+
   return (
     <Flex gap="middle" vertical align="flex-end">
       <Space>
-        <Button>페이지 등록</Button>
+        <Button onClick={handlePageRegistration}>페이지 등록</Button>
         <Button>삭제</Button>
       </Space>
       <Table<PageDataType>
@@ -90,6 +99,7 @@ const PagePage = () => {
           )}
         />
       </Table>
+      <PageRegistrationModal ref={pageRegistrationModalRef} />
     </Flex>
   );
 };
