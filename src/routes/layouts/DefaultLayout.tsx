@@ -19,6 +19,10 @@ const items: MenuItem[] = [
     icon: <AppstoreOutlined />,
     children: [
       {
+        key: paths.pageManagement,
+        label: pathLabel.pageManagement,
+      },
+      {
         key: paths.store,
         label: pathLabel.store,
       },
@@ -65,13 +69,11 @@ export default function DefaultLayout() {
           />
           <AntdMenu
             theme="dark"
-            defaultSelectedKeys={[paths.store]}
+            defaultSelectedKeys={[paths.pageManagement]}
             defaultOpenKeys={[paths.page]}
             mode="inline"
             items={items}
-            onClick={(info) => {
-              navigate(info.key);
-            }}
+            onClick={(info) => navigate(info.key)}
           />
         </Sider>
         <Layout>

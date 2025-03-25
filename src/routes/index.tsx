@@ -16,13 +16,15 @@ const Image = lazy(() => import('@/pages/image'));
 const Post = lazy(() => import('@/pages/post'));
 const PostDetail = lazy(() => import('@/pages/post/detail'));
 
+const PagePage = lazy(() => import('@/pages/page'));
 const StorePage = lazy(() => import('@/pages/page/store'));
 const PromotionPage = lazy(() => import('@/pages/page/promotion'));
 const ReviewPage = lazy(() => import('@/pages/page/review'));
 const FaqPage = lazy(() => import('@/pages/page/faq'));
 
 export const pathLabel: { [key: string]: string } = {
-  page: '페이지 관리',
+  page: '페이지',
+  pageManagement: '페이지 관리',
   store: '지점 관리',
   promotion: '프로모션 관리',
   review: '리뷰',
@@ -31,6 +33,7 @@ export const pathLabel: { [key: string]: string } = {
 
 export const paths: { [key: string]: string } = {
   page: '/page',
+  pageManagement: '/page/pageManagement',
   store: '/page/store',
   promotion: '/page/promotion',
   review: '/page/review',
@@ -46,29 +49,31 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/',
-            element: <Navigate to={paths.store} replace />,
+            element: <Navigate to={paths.pageManagement} replace />,
           },
           {
             path: paths.page,
-            element: <Navigate to={paths.store} replace />,
-            children: [
-              {
-                path: paths.store,
-                element: <StorePage />,
-              },
-              {
-                path: paths.promotion,
-                element: <PromotionPage />,
-              },
-              {
-                path: paths.review,
-                element: <ReviewPage />,
-              },
-              {
-                path: paths.faq,
-                element: <FaqPage />,
-              },
-            ],
+            element: <Navigate to={paths.pageManagement} replace />,
+          },
+          {
+            path: paths.pageManagement,
+            element: <PagePage />,
+          },
+          {
+            path: paths.store,
+            element: <StorePage />,
+          },
+          {
+            path: paths.promotion,
+            element: <PromotionPage />,
+          },
+          {
+            path: paths.review,
+            element: <ReviewPage />,
+          },
+          {
+            path: paths.faq,
+            element: <FaqPage />,
           },
           {
             path: '/image',
