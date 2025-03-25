@@ -3,6 +3,7 @@ import { Button, Flex, Space, Table, TableProps } from 'antd';
 import Column from 'antd/es/table/Column';
 import classNames from 'classnames/bind';
 import { BasisModalHandle } from '@/components/modal/BasisModal';
+import DangerModal from '@/components/modal/danger/DangerModal';
 import PageRegistrationModal from '@/components/modal/pageRegistration/PageRegistrationModal';
 import styles from './index.module.scss';
 
@@ -64,16 +65,21 @@ const PagePage = () => {
   const cx = classNames.bind(styles);
 
   const pageRegistrationModalRef = useRef<BasisModalHandle>(null);
+  const pageDeleteModalRef = useRef<BasisModalHandle>(null);
 
   const handlePageRegistration = () => {
     pageRegistrationModalRef.current?.open();
+  };
+
+  const handlePageDelete = () => {
+    pageDeleteModalRef.current?.open();
   };
 
   return (
     <Flex gap="middle" vertical align="flex-end">
       <Space>
         <Button onClick={handlePageRegistration}>페이지 등록</Button>
-        <Button>삭제</Button>
+        <Button onClick={handlePageDelete}>삭제</Button>
       </Space>
       <Table<PageDataType>
         rowSelection={{ ...rowSelection }}
@@ -100,6 +106,9 @@ const PagePage = () => {
         />
       </Table>
       <PageRegistrationModal ref={pageRegistrationModalRef} />
+      <DangerModal ref={pageDeleteModalRef} title="지점 페이지 삭제">
+        <p>삭제하시겠습니까?</p>
+      </DangerModal>
     </Flex>
   );
 };
