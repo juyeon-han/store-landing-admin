@@ -1,16 +1,41 @@
-import React, { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import SuspenseFallback from '@/components/fallback/SuspenseFallback';
-import ErrorBoundaryLayout from '@/routes/layouts/ErrorBoundary';
 
-const DefaultLayout = React.lazy(() => import('@/routes/layouts/Default'));
-const Home = React.lazy(() => import('@/pages'));
-const Image = React.lazy(() => import('@/pages/image'));
-const Post = React.lazy(() => import('@/pages/post'));
-const PostDetail = React.lazy(() => import('@/pages/post/detail'));
-const NotFound = React.lazy(
-  () => import('@/components/fallback/NotFoundFallback')
+const DefaultLayout = lazy(() => import('@/routes/layouts/DefaultLayout'));
+const ErrorBoundaryLayout = lazy(
+  () => import('@/routes/layouts/ErrorBoundary')
 );
+const NotFound = lazy(() => import('@/components/fallback/NotFoundFallback'));
+
+const Image = lazy(() => import('@/pages/image'));
+const Post = lazy(() => import('@/pages/post'));
+const PostDetail = lazy(() => import('@/pages/post/detail'));
+
+const StorePage = lazy(() => import('@/pages/page/store'));
+const PromotionPage = lazy(() => import('@/pages/page/promotion'));
+const ReviewPage = lazy(() => import('@/pages/page/review'));
+const FaqPage = lazy(() => import('@/pages/page/faq'));
+
+export const pathLabel: { [key: string]: string } = {
+  page: '페이지 관리',
+  store: '지점 관리',
+  promotion: '프로모션 관리',
+  review: '리뷰',
+  faq: 'FAQ',
+};
+
+export const paths: { [key: string]: string } = {
+  page: '/page',
+  store: '/page/store',
+  promotion: '/page/promotion',
+  review: '/page/review',
+  faq: '/page/faq',
+};
 
 const router = createBrowserRouter([
   {
@@ -21,7 +46,29 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/',
-            element: <Home />,
+            element: <Navigate to={paths.store} replace />,
+          },
+          {
+            path: paths.page,
+            element: <Navigate to={paths.store} replace />,
+            children: [
+              {
+                path: paths.store,
+                element: <StorePage />,
+              },
+              {
+                path: paths.promotion,
+                element: <PromotionPage />,
+              },
+              {
+                path: paths.review,
+                element: <ReviewPage />,
+              },
+              {
+                path: paths.faq,
+                element: <FaqPage />,
+              },
+            ],
           },
           {
             path: '/image',
