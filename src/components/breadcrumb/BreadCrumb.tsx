@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Breadcrumb as AntdBreadcrumb } from 'antd';
 import classNames from 'classnames/bind';
 import { pathLabel } from '@/routes';
@@ -8,6 +9,7 @@ interface BreadCrumbProps {}
 
 const BreadCrumb = (props: BreadCrumbProps) => {
   const cx = classNames.bind(styles);
+  const location = useLocation();
   const [paths, setPaths] = useState<string[]>([]);
 
   const getPathLabel = (path: string) => {

@@ -1,5 +1,10 @@
-import { useState } from 'react';
-import { Outlet, ScrollRestoration, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { Layout, Menu as AntdMenu, MenuProps, theme } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import classNames from 'classnames/bind';
@@ -45,11 +50,25 @@ const items: MenuItem[] = [
 export default function DefaultLayout() {
   const cx = classNames.bind(styles);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedKeys([location.pathname ?? paths.pageManagement]);
+
+    const pathSnippets = location.pathname.split('/').filter((i) => i);
+
+    if (pathSnippets.length > 1) {
+      setOpenKeys([`/${pathSnippets[0]}`]);
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -69,8 +88,8 @@ export default function DefaultLayout() {
           />
           <AntdMenu
             theme="dark"
-            defaultSelectedKeys={[paths.pageManagement]}
-            defaultOpenKeys={[paths.page]}
+            selectedKeys={selectedKeys}
+            openKeys={openKeys}
             mode="inline"
             items={items}
             onClick={(info) => navigate(info.key)}
