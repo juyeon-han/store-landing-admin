@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+
+  .content_wrapper {
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+
+    .title {
+      width: 25%;
+      font-weight: bolder;
+    }
+
+    .content {
+      width: 75%;
+      line-height: 1.5;
+      word-break: keep-all;
+      text-align: justify;
+    }
+
+    .image {
+      border-radius: 10px;
+    }
+  }
+}

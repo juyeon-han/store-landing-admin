@@ -1,10 +1,12 @@
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Space, Table, TableProps } from 'antd';
 import Column from 'antd/es/table/Column';
 import classNames from 'classnames/bind';
 import { BasisModalHandle } from '@/components/modal/BasisModal';
 import DangerModal from '@/components/modal/danger/DangerModal';
 import PageRegistrationModal from '@/components/modal/pageRegistration/PageRegistrationModal';
+import { paths } from '@/routes';
 import styles from './index.module.scss';
 
 interface PageDataType {
@@ -63,6 +65,7 @@ const rowSelection: TableProps<PageDataType>['rowSelection'] = {
 
 const PagePage = () => {
   const cx = classNames.bind(styles);
+  const navigate = useNavigate();
 
   const pageRegistrationModalRef = useRef<BasisModalHandle>(null);
   const pageDeleteModalRef = useRef<BasisModalHandle>(null);
@@ -85,6 +88,9 @@ const PagePage = () => {
         rowSelection={{ ...rowSelection }}
         dataSource={data}
         className={cx('table')}
+        onRow={(record) => ({
+          onClick: () => navigate(`${paths.store}?store_id=${record.store_id}`),
+        })}
       >
         <Column title="등록일" dataIndex="date" key="date" align="center" />
         <Column title="지점 ID" dataIndex="store_id" key="store_id" />
